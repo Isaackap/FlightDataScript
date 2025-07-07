@@ -5,13 +5,13 @@ load_dotenv() # Loads variables from .env into environment
 
 # The 'url' and 'headers' parameters of the "Search Flights" API request
 # These should remain constant, the only value that changes is your personal api key that will be loaded from your local .env file
-SEARCH_FLIGHTS_API_URL = "https://google-flights2.p.rapidapi.com/api/v1/searchFlights"
+SEARCH_FLIGHTS_API_URL = "https://tripadvisor16.p.rapidapi.com/api/v1/flights/searchFlights"
 HEADERS = {
-    "x-rapidapi-host": "google-flights2.p.rapidapi.com",
+    "x-rapidapi-host": "tripadvisor16.p.rapidapi.com",
     "x-rapidapi-key": os.getenv("RAPIDAPI_KEY")
 }
 
-# This query takes 13 total parameters, some are optional
+# This query takes 20 total parameters, some are optional
 # Replace the following variables with the data you desire for your flight search, following the correct format
 
 # Set the desired price point to recieve alerts on flight prices
@@ -19,48 +19,68 @@ HEADERS = {
 PRICE_THRESHOLD = 1500
 
 # The airport code (usually 3 letters) and the word 'AIRPORT', separated with a '.'
-# Example is the George Bush Intercontinental Airport in Houston, TX. Airport code is 'IAH', so the parameter is "IAH.AIRPORT"
+# Example is the George Bush Intercontinental Airport in Houston, TX. Airport code is 'IAH'"
 # From/Departure location Id
-DEPARTURE_ID = "example.AIRPORT"
+SOURCE_AIRPORT_CODE = "IAH"
 
 # To/Arrival location Id, follows same rules as the FROM_ID
-ARRIVAL_ID = "example.AIRPORT"
+DESTINATION_AIRPORT_CODE = "TPE"
 
 # Departure or travel date. Format: YYYY-MM-DD
-OUTBOUND_DATE = "yyyy-mm-dd"
+DEPARTURE_DATE = "yyyy-mm-dd"
+
+# Pass itineraryType as ONE_WAY for one way and ROUND_TRIP for return flight.
+ITINERARY_TYPE = "ROUND_TRIP"
+
+# Sort by parameter. ML_BEST_VALUE, DURATION, PRICE, EARLIEST_OUTBOUND_DEPARTURE, EARLIEST_OUTBOUND_ARRIVAL, LATEST_OUTBOUND_DEPARTURE, LATEST_OUTBOUND_ARRIVAL
+SORT_ORDER = "ML_BEST_VALUE"
+
+# The number of guests who are 18-64 years in age. The default value is set to 1
+NUM_ADULTS = 1
+
+# The number of seniors with ago over 65 years old. The default value is set to 1
+NUM_SENIORS = 0
+
+# Specifies the preferred cabin class, such as Economy, Premium Economy, Business, or First Class.
+# Available Travel Class: ECONOMY, PREMIUM_ECONOMY, BUSINESS, or FIRST
+CLASS_OF_SERVICE = "ECONOMY"
 
 # Return date. Format: YYYY-MM-DD (optional)
 RETURN_DATE = "yyyy-mm-dd"
 
-# Specifies the preferred cabin class, such as Economy, Premium Economy, Business, or First Class. (optional)
-# Available Travel Class: ECONOMY, PREMIUM_ECONOMY, BUSINESS, or FIRST
-TRAVEL_CLASS = "ECONOMY"
+# Page number amount, determines how many flight results you get. ~10 flights per page. (optional)
+PAGE_NUMBER = 1
 
-# The number of guests who are 12 years of age or older. The default value is set to 1 (optional)
-ADULTS = 1
+# Pass Children age in the form of Array (Ages between 2-12 years) Eg: [2, 10] (optional)
+CHILD_AGES = []
 
-# The number of children ages 2-11. (optional)
-CHILDREN = 0
+# Include nearby airports (optional)
+NEARBY = "yes"
 
-# The count of infants traveling without a seat, sitting on an adult's lap (ages < 2). (optional)
-INFANT_ON_LAP = 0
-
-# The count of infants (below 2 years old) who require a separate seat (optional)
-INFANT_IN_SEAT = 0
-
-# Indicates whether hidden should be included in results. (optional)
-# Available Options: YES(1) and NO(0)
-# Default Value: 0
-SHOW_HIDDEN = 1
+# Prefer nonstop flights (optional)
+NONSTOP = "yes"
 
 # Sets the currency for price formatting in the response. (optional)
 # Default Value: USD
-CURRENCY = "USD"
+CURRENCY_CODE = "USD"
 
-# Specifies the language in which the response should be returned. (optional)
-# Default Value: en-US
-LANGUAGE_CODE = "en-US"
+# Specifies the region. (optional)
+# Either USA, or UK
+REGION = "USA"
 
-# Specifies the country context for filtering and displaying results. (optional)
-# Default Value: US
-COUNTRY_CODE = "US"
+# Filter by airline. Use comma-separated airline id. Example: KL,JU (optional)
+AIRLINES = ""
+
+#Filter by booking sites. Use comma-separated booking sites id. Example: Air Serbia,Austrian Airlines (optional)
+BOOKING_SITES = ""
+
+# --------------------------- Completely ommitting these 3 below from the querystring, including here though just in case --------------------------------------
+
+# Pass searchHash from the previous API call to get a complete response (optional)
+SEARCH_HASH = ""
+
+# Pass pageLoadUid from the previous API call to get a complete response (optional)
+PAGE_LOAD_UID = ""
+
+# Pass searchId from the previous API call to get a complete response (optional)
+SEARCH_ID = ""
