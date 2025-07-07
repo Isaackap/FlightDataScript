@@ -3,16 +3,15 @@ from dotenv import load_dotenv
 
 load_dotenv() # Loads variables from .env into environment
 
-# The 'url' and 'headers' parameters of the API request
+# The 'url' and 'headers' parameters of the "Search Flights" API request
 # These should remain constant, the only value that changes is your personal api key that will be loaded from your local .env file
-API_URL = "https://booking-com15.p.rapidapi.com/api/v1/flights/searchFlights"
+SEARCH_FLIGHTS_API_URL = "https://google-flights2.p.rapidapi.com/api/v1/searchFlights"
 HEADERS = {
-    "x-rapidapi-host": "booking-com15.p.rapidapi.com",
+    "x-rapidapi-host": "google-flights2.p.rapidapi.com",
     "x-rapidapi-key": os.getenv("RAPIDAPI_KEY")
 }
 
-
-# The query takes 11 total parameters, some are optional
+# This query takes 13 total parameters, some are optional
 # Replace the following variables with the data you desire for your flight search, following the correct format
 
 # Set the desired price point to recieve alerts on flight prices
@@ -22,39 +21,46 @@ PRICE_THRESHOLD = 1500
 # The airport code (usually 3 letters) and the word 'AIRPORT', separated with a '.'
 # Example is the George Bush Intercontinental Airport in Houston, TX. Airport code is 'IAH', so the parameter is "IAH.AIRPORT"
 # From/Departure location Id
-FROM_ID = "example.AIRPORT"
+DEPARTURE_ID = "example.AIRPORT"
 
 # To/Arrival location Id, follows same rules as the FROM_ID
-TO_ID = "example.AIRPORT"
+ARRIVAL_ID = "example.AIRPORT"
 
 # Departure or travel date. Format: YYYY-MM-DD
-DEPART_DATE = "yyyy-mm-dd"
+OUTBOUND_DATE = "yyyy-mm-dd"
 
 # Return date. Format: YYYY-MM-DD (optional)
 RETURN_DATE = "yyyy-mm-dd"
 
-# Filters flights based on the number of stops. Accepted values are: (optional)
-# none for no preference (returns flights with any number of stops)
-# 0 for non-stop flights
-# 1 for one-stop flights
-# 2 for two-stop flights
-STOPS = 0 
+# Specifies the preferred cabin class, such as Economy, Premium Economy, Business, or First Class. (optional)
+# Available Travel Class: ECONOMY, PREMIUM_ECONOMY, BUSINESS, or FIRST
+TRAVEL_CLASS = "ECONOMY"
 
-# The page number (optional)
-PAGE_NO = 1
-
-# The number of guests who are 18 years of age or older. The default value is set to 1 (optional)
+# The number of guests who are 12 years of age or older. The default value is set to 1 (optional)
 ADULTS = 1
 
-# The number of children, including infants, who are under 18. (optional)
-# Example: Child 1 Age = 8 months Child 2 Age = 1 year Child 3 Age = 17 years Here is what the request parameter would look like: children_age: 0,1,17
-CHILDREN = 0,1,17
+# The number of children ages 2-11. (optional)
+CHILDREN = 0
 
-# This parameter orders result by BEST, CHEAPEST or FASTEST flights (optional)
-SORT = "BEST"
+# The count of infants traveling without a seat, sitting on an adult's lap (ages < 2). (optional)
+INFANT_ON_LAP = 0
 
-# Search for flights that match the cabin class specified. Cabin call can be either ECONOMY, PREMIUM_ECONOMY, BUSINESS or FIRST (optional)
-CABIN_CLASS = "ECONOMY"
+# The count of infants (below 2 years old) who require a separate seat (optional)
+INFANT_IN_SEAT = 0
 
-# The currency code (optional)
-CURRENCY_CODE = "USD"
+# Indicates whether hidden should be included in results. (optional)
+# Available Options: YES(1) and NO(0)
+# Default Value: 0
+SHOW_HIDDEN = 1
+
+# Sets the currency for price formatting in the response. (optional)
+# Default Value: USD
+CURRENCY = "USD"
+
+# Specifies the language in which the response should be returned. (optional)
+# Default Value: en-US
+LANGUAGE_CODE = "en-US"
+
+# Specifies the country context for filtering and displaying results. (optional)
+# Default Value: US
+COUNTRY_CODE = "US"
