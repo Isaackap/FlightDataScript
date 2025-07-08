@@ -6,7 +6,7 @@ import config
 
 # API querystring that imports the parameters set in the config.py file
 # -------- IMPORTANT ---------
-# If you left any of the optional parameters in config.py blank such as "children", or if it has a value but you want to omit it
+# If you left any of the optional parameters in config.py blank such as "child_ages", or if it has a value but you want to omit it
 # then you must comment it out of the querystring dict below.
 querystring = {
     "sourceAirportCode": config.SOURCE_AIRPORT_CODE,                # REQUIRED PARAMETER
@@ -37,16 +37,14 @@ def mockAPI():
     return data["data"]["flights"]
 
 def searchFlightOffers(data):
-    option = 0
+    flight_num = 0
     for flight in data:
-        #for segments in flight["segments"]:
-            #for legs in segments["legs"]:
-                #pass
-
-        print(f"Flight: {option}; Total Price: {flight["purchaseLinks"][""]} {config.CURRENCY_CODE}")
-        print()
-        option += 1
-
+        option = 0
+        print(f"Flight: {flight_num}:")
+        for purchaseLink in flight["purchaseLinks"]:
+            print(f"Option: {option}; Ticket Provider: {purchaseLink["providerId"]}; Total Price: {purchaseLink["totalPrice"]} {config.CURRENCY_CODE}")
+            option += 1
+        flight_num += 1
 
 if __name__ == "__main__":
     mock_data = mockAPI()
