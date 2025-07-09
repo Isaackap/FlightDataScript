@@ -2,7 +2,28 @@ import os
 import requests
 import json
 import config
+import smtplib
+from email.message import EmailMessage
 
+# Function to build and send the email of the price alerts
+# Pulls all the parameters from the config file except the main message/body of the email
+def sendEmail():
+    msg = EmailMessage()
+    message = "This is a test"
+    
+    msg["From"] = config.FROM_EMAIL
+    msg["To"] = config.TO_EMAIL
+    msg["Subject"] = config.EMAIL_SUBJECT
+    msg.set_content(message)
+
+    with smtplib.SMTP(config.SMTP_SERVER, config.SMTP_PORT) as server:
+        server.ehlo()
+        server.starttls()
+        server.ehlo()
+        server.login(config.FROM_EMAIL, config.EMAIL_PASSWORD)
+        server.send_message(msg)
+
+        print("Email has been sent to " + config.TO_EMAIL)
 
 # API querystring that imports the parameters set in the config.py file
 # -------- IMPORTANT ---------
@@ -36,6 +57,7 @@ def mockAPI():
     
     return data["data"]["flights"]
 
+# Search through the response data for flight info and prices
 def searchFlightOffers(data):
     flight_num = 0
     for flight in data:
@@ -50,4 +72,5 @@ if __name__ == "__main__":
     mock_data = mockAPI()
     #print(mock_data)
     #print(querystring)
-    searchFlightOffers(mock_data)
+    #searchFlightOffers(mock_data)
+    sendEmail()
