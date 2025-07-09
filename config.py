@@ -3,6 +3,23 @@ from dotenv import load_dotenv
 
 load_dotenv() # Loads variables from .env into environment
 
+# ------------------------------------------------------------- Email Configurations Below ------------------------------------------------------------
+
+# Parameters for sending the email/alert of flight offers.
+# The Sender and Receiver email info will be imported from the local .env file as well as the Sender email password (Use app password if 2FA is enabled)
+FROM_EMAIL = os.getenv("SENDER_EMAIL")
+TO_EMAIL = os.getenv("RECEIVER_EMAIL")
+EMAIL_PASSWORD = os.getenv("PASSWORD")
+# Parameters for the email server, only variable that needs changing is the 'SMTP_SERVER', adjust it to your sender email
+SMTP_SERVER = "smtp.gmail.com"
+SMTP_PORT = 587
+USE_TLS = "True"
+# The subject text of the email, set it to whatever you desire
+EMAIL_SUBJECT = "FlightScript Price Alert Test"
+
+
+# ------------------------------------------------------------- API Configurations below --------------------------------------------------------------
+
 # The 'url' and 'headers' parameters of the "Search Flights" API request
 # These should remain constant, the only value that changes is your personal api key that will be loaded from your local .env file
 SEARCH_FLIGHTS_API_URL = "https://tripadvisor16.p.rapidapi.com/api/v1/flights/searchFlights"
