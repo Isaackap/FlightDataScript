@@ -9,20 +9,21 @@ from email.message import EmailMessage
 # Pulls all the parameters from the config file except the main message/body of the email
 def sendEmail():
     msg = EmailMessage()
-    message = "This is a test"
+    with open("flight_data.txt", "r") as f:
+        message = f.read()
     
     msg["From"] = config.FROM_EMAIL
     msg["To"] = config.TO_EMAIL
     msg["Subject"] = config.EMAIL_SUBJECT
     msg.set_content(message)
-
+    
     with smtplib.SMTP(config.SMTP_SERVER, config.SMTP_PORT) as server:
         server.ehlo()
         server.starttls()
         server.ehlo()
         server.login(config.FROM_EMAIL, config.EMAIL_PASSWORD)
         server.send_message(msg)
-
+    
         print("Email has been sent to " + config.TO_EMAIL)
 
 # API querystring that imports the parameters set in the config.py file
@@ -51,20 +52,21 @@ querystring = {
 
 # Mock data used to test features before implementing actual API calls with a key
 # Response is the JSON given as example response on rapidapi
-def mockAPI():
+def mockAPI() -> list:
     with open("mock_search_flights_response.json", "r") as f:
-        data = json.load(f)
+        data: list = json.load(f)
     
     return data["data"]["flights"]
 
 # Search through the response data for flight info and prices
-def searchFlightOffers(data):
-    flight_num = 0
+def searchFlightOffers(data: list):
+    flight_num: int  = 0
+    file = open("flight_data.txt", "w+")
     for flight in data:
-        option = 0
-        print(f"Flight: {flight_num}:")
+        option: int = 0
+        file.write(f"Flight: {flight_num}:\n")
         for purchaseLink in flight["purchaseLinks"]:
-            print(f"Option: {option}; Ticket Provider: {purchaseLink["providerId"]}; Total Price: {purchaseLink["totalPrice"]} {config.CURRENCY_CODE}")
+            file.write(f"Option: {option}; Ticket Provider: {purchaseLink["providerId"]}; Total Price: {purchaseLink["totalPrice"]} {config.CURRENCY_CODE}\n")
             option += 1
         flight_num += 1
 
@@ -72,5 +74,5 @@ if __name__ == "__main__":
     mock_data = mockAPI()
     #print(mock_data)
     #print(querystring)
-    #searchFlightOffers(mock_data)
-    sendEmail()
+    searchFlightOffers(mock_data)
+    #sendEmail()
