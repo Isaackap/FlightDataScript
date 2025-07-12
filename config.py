@@ -24,8 +24,8 @@ EMAIL_SUBJECT = "FlightScript Price Alert Test"
 # These should remain constant, the only value that changes is your personal api key that will be loaded from your local .env file
 SEARCH_FLIGHTS_API_URL = "https://tripadvisor16.p.rapidapi.com/api/v1/flights/searchFlights"
 HEADERS = {
-    "x-rapidapi-host": "tripadvisor16.p.rapidapi.com",
-    "x-rapidapi-key": os.getenv("RAPIDAPI_KEY")
+    "x-rapidapi-key": os.getenv("RAPIDAPI_KEY"),
+    "x-rapidapi-host": "tripadvisor16.p.rapidapi.com"
 }
 
 # This query takes 20 total parameters, some are optional
@@ -41,10 +41,10 @@ PRICE_THRESHOLD = 1500
 SOURCE_AIRPORT_CODE = "IAH"
 
 # To/Arrival location Id, follows same rules as the FROM_ID
-DESTINATION_AIRPORT_CODE = "TPE"
+DESTINATION_AIRPORT_CODE = "HND"
 
 # Departure or travel date. Format: YYYY-MM-DD
-DEPARTURE_DATE = "yyyy-mm-dd"
+DEPARTURE_DATE = "2026-01-06"
 
 # Pass itineraryType as ONE_WAY for one way and ROUND_TRIP for return flight.
 ITINERARY_TYPE = "ROUND_TRIP"
@@ -53,20 +53,20 @@ ITINERARY_TYPE = "ROUND_TRIP"
 SORT_ORDER = "ML_BEST_VALUE"
 
 # The number of guests who are 18-64 years in age. The default value is set to 1
-NUM_ADULTS = 1
+NUM_ADULTS = "1"
 
 # The number of seniors with ago over 65 years old. The default value is set to 1
-NUM_SENIORS = 0
+NUM_SENIORS = "0"
 
 # Specifies the preferred cabin class, such as Economy, Premium Economy, Business, or First Class.
 # Available Travel Class: ECONOMY, PREMIUM_ECONOMY, BUSINESS, or FIRST
 CLASS_OF_SERVICE = "ECONOMY"
 
 # Return date. Format: YYYY-MM-DD (optional)
-RETURN_DATE = "yyyy-mm-dd"
+RETURN_DATE = "2026-01-16"
 
 # Page number amount, determines how many flight results you get. ~10 flights per page. (optional)
-PAGE_NUMBER = 1
+PAGE_NUMBER = "1"
 
 # Pass Children age in the form of Array (Ages between 2-12 years) Eg: [2, 10] (optional)
 CHILD_AGES = []
