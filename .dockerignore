@@ -35,3 +35,4 @@ README.md
 **/*.txt
 credentials.json
 mock_search_flights_response.json
+token.json
