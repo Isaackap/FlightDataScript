@@ -22,13 +22,13 @@ EMAIL_SUBJECT = "FlightScript Price Alert Test"
 
 # The 'url' and 'headers' parameters of the "Search Flights" API request
 # These should remain constant, the only value that changes is your personal api key that will be loaded from your local .env file
-SEARCH_FLIGHTS_API_URL = "https://tripadvisor16.p.rapidapi.com/api/v1/flights/searchFlights"
+SEARCH_FLIGHTS_API_URL = "https://booking-com15.p.rapidapi.com/api/v1/flights/searchFlights"
 HEADERS = {
     "x-rapidapi-key": os.getenv("RAPIDAPI_KEY"),
-    "x-rapidapi-host": "tripadvisor16.p.rapidapi.com"
+    "x-rapidapi-host": "booking-com15.p.rapidapi.com"
 }
 
-# This query takes 20 total parameters, some are optional
+# This query takes 11 total parameters, some are optional
 # Replace the following variables with the data you desire for your flight search, following the correct format
 
 # Set the desired price point to recieve alerts on flight prices
@@ -38,66 +38,40 @@ PRICE_THRESHOLD = 1500
 # The airport code (usually 3 letters) and the word 'AIRPORT', separated with a '.'
 # Example is the George Bush Intercontinental Airport in Houston, TX. Airport code is 'IAH'"
 # From/Departure location Id
-SOURCE_AIRPORT_CODE = "IAH"
+SOURCE_AIRPORT_CODE = "IAH.AIRPORT"
 
 # To/Arrival location Id, follows same rules as the FROM_ID
-DESTINATION_AIRPORT_CODE = "HND"
+DESTINATION_AIRPORT_CODE = "HND.AIRPORT"
 
 # Departure or travel date. Format: YYYY-MM-DD
 DEPARTURE_DATE = "2026-01-06"
 
-# Pass itineraryType as ONE_WAY for one way and ROUND_TRIP for return flight.
-ITINERARY_TYPE = "ROUND_TRIP"
-
-# Sort by parameter. ML_BEST_VALUE, DURATION, PRICE, EARLIEST_OUTBOUND_DEPARTURE, EARLIEST_OUTBOUND_ARRIVAL, LATEST_OUTBOUND_DEPARTURE, LATEST_OUTBOUND_ARRIVAL
-SORT_ORDER = "ML_BEST_VALUE"
-
-# The number of guests who are 18-64 years in age. The default value is set to 1
-NUM_ADULTS = "1"
-
-# The number of seniors with ago over 65 years old. The default value is set to 1
-NUM_SENIORS = "0"
-
-# Specifies the preferred cabin class, such as Economy, Premium Economy, Business, or First Class.
-# Available Travel Class: ECONOMY, PREMIUM_ECONOMY, BUSINESS, or FIRST
-CLASS_OF_SERVICE = "ECONOMY"
-
 # Return date. Format: YYYY-MM-DD (optional)
 RETURN_DATE = "2026-01-16"
 
-# Page number amount, determines how many flight results you get. ~10 flights per page. (optional)
+# Filters flights based on the number of stops. Accepted values are: (optional)
+# none for no preference (returns flights with any number of stops)
+# 0 for non-stop flights
+# 1 for one-stop flights
+# 2 for two-stop flights
+# If provided, the value must be either none, 0, 1, or 2.
+STOPS = "0"
+
+# Page number amount, determines how many flight results you get. (optional)
 PAGE_NUMBER = "1"
 
-# Pass Children age in the form of Array (Ages between 2-12 years) Eg: [2, 10] (optional)
-CHILD_AGES = []
+# The number of guests who are 18 years in age or older. The default value is set to 1 (optional)
+ADULTS = "1"
 
-# Include nearby airports (optional)
-NEARBY = "yes"
+# Pass Children age in the form of string (Ages under 18) Eg: "0,1,17" (optional)
+CHILDREN = ""
 
-# Prefer nonstop flights (optional)
-NONSTOP = "yes"
+# Sort by parameter. BEST, CHEAPEST, FASTEST (optional)
+SORT_ORDER = "BEST"
+
+# Specifies the preferred cabin class, such as Economy, Premium Economy, Business, or First Class. (optional)
+# Available Travel Class: ECONOMY, PREMIUM_ECONOMY, BUSINESS, or FIRST
+CABIN_CLASS = "ECONOMY"
 
 # Sets the currency for price formatting in the response. (optional)
-# Default Value: USD
 CURRENCY_CODE = "USD"
-
-# Specifies the region. (optional)
-# Either USA, or UK
-REGION = "USA"
-
-# Filter by airline. Use comma-separated airline id. Example: KL,JU (optional)
-AIRLINES = ""
-
-#Filter by booking sites. Use comma-separated booking sites id. Example: Air Serbia,Austrian Airlines (optional)
-BOOKING_SITES = ""
-
-# --------------------------- Completely ommitting these 3 below from the querystring, including here though just in case --------------------------------------
-
-# Pass searchHash from the previous API call to get a complete response (optional)
-SEARCH_HASH = ""
-
-# Pass pageLoadUid from the previous API call to get a complete response (optional)
-PAGE_LOAD_UID = ""
-
-# Pass searchId from the previous API call to get a complete response (optional)
-SEARCH_ID = ""
