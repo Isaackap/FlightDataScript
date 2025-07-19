@@ -65,6 +65,7 @@ def callAPI():
 
     return response, data
 
+# Convert the flight departure/arrival time from timestamp to generic time of day for better interpretation in data sheet
 def getTimeOfDay(flightTime: str) -> str:
     dt = datetime.fromisoformat(flightTime)
     hour = dt.hour
@@ -81,7 +82,8 @@ def getTimeOfDay(flightTime: str) -> str:
         return "night"
     else:
         return "late night"
-    
+
+# Convert the flight duration response from seconds to hours
 def getFlightDuration(duration: str) -> str:
     duration_float = float(duration)
     flight_hours = round((duration_float / 3600), 2)
