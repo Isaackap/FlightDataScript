@@ -4,6 +4,7 @@ import json
 import config
 import smtplib
 from email.message import EmailMessage
+from datetime import datetime
 
 # Function to build and send the email of the price alerts
 # Pulls all the parameters from the config file except the main message/body of the email
@@ -51,7 +52,7 @@ def mockAPI():
     with open("mock_search_flights_response.json", "r") as f:
         data = json.load(f)
     
-    return data["flightOffers"]
+    return data["data"]["flightOffers"]
 
 def callAPI():
     response = requests.get(config.SEARCH_FLIGHTS_API_URL, headers=config.HEADERS, params=querystring)
@@ -64,17 +65,37 @@ def callAPI():
 
     return response, data
 
+def getTimeOfDay(flightTime: str) -> str:
+    dt = datetime.fromisoformat(flightTime)
+    hour = dt.hour
+
+    if 4 <= hour < 8:
+        return "early morning"
+    elif 8 <= hour < 12:
+        return "morning"
+    elif 12 <= hour < 16:
+        return "afternoon"
+    elif 16 <= hour < 20:
+        return "evening"
+    elif 20 <= hour < 24:
+        return "night"
+    else:
+        return "late night"
+    
+def getFlightDuration(duration: str) -> str:
+    duration_float = float(duration)
+    flight_hours = round((duration_float / 3600), 2)
+
+    return str(flight_hours)
+
 # Search through the response data for flight info and prices
-def searchFlightOffers(data: list):
-    flight_num  = 0
-    file = open("flight_data.txt", "w+")
-    for flight in data:
-        option = 0
-        file.write(f"Flight: {flight_num}:\n")
-        for purchaseLink in flight["purchaseLinks"]:
-            file.write(f"Option: {option}; Ticket Provider: {purchaseLink["providerId"]}; Total Price: {purchaseLink["totalPrice"]} {config.CURRENCY_CODE}\n")
-            option += 1
-        flight_num += 1
+def searchFlightOffers(data: dict):
+    day_of_week = datetime.now().strftime('%A')
+    with open("flight_data.txt", "w+") as file:
+        for flightOffers in data:
+            segments = flightOffers["segments"][0]
+            legs = segments["legs"][0]
+            file.write(f"{legs["carriersData"][0]["name"]},{legs["flightInfo"]["flightNumber"]},{segments["departureAirport"]["cityName"]},{segments["departureAirport"]["code"]},{getTimeOfDay(segments["departureTime"])},{len(legs["flightStops"])},{getFlightDuration(segments["totalTime"])},{segments["arrivalAirport"]["cityName"]},{segments["arrivalAirport"]["code"]},{getTimeOfDay(segments["arrivalTime"])},{legs["cabinClass"]},{flightOffers["tripType"]},{flightOffers["priceBreakdown"]["total"]["currencyCode"]},{flightOffers["priceBreakdown"]["total"]["units"]},{day_of_week}\n")
 
 if __name__ == "__main__":
     mock_data = mockAPI()
