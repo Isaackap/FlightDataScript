@@ -21,7 +21,7 @@ def readText():
   with open("flight_data.txt", "r") as f:
     lines = f.readlines()
     for item in lines:
-      data.append([item.replace('\n','')])
+      data.append(item.split(','))
     f.close()
     return data
 
