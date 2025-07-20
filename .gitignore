@@ -1,5 +1,5 @@
 .env
-mock_search_flights_response.json
+search_flights_response.json
 __pycache__
 *.txt
 credentials.json
