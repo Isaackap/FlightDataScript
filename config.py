@@ -33,7 +33,7 @@ HEADERS = {
 
 # Set the desired price point to recieve alerts on flight prices
 # Make sure the currency matches the set "CURRENCY_CODE" parameter down below
-PRICE_THRESHOLD = 1500
+PRICE_THRESHOLD = 1100
 
 # The airport code (usually 3 letters) and the word 'AIRPORT', separated with a '.'
 # Example is the George Bush Intercontinental Airport in Houston, TX. Airport code is 'IAH'"
@@ -58,6 +58,7 @@ RETURN_DATE = "2026-01-16"
 STOPS = "0"
 
 # Page number amount, determines how many flight results you get. (optional)
+# Returns ~15 flights per page
 PAGE_NUMBER = "1"
 
 # The number of guests who are 18 years in age or older. The default value is set to 1 (optional)
