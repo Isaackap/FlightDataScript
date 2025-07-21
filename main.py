@@ -5,6 +5,7 @@ import config
 import smtplib
 from email.message import EmailMessage
 from datetime import datetime
+import gsheets
 
 # Function to build and send the email of the price alerts
 # Pulls all the parameters from the config file except the main message/body of the email
@@ -111,6 +112,7 @@ def searchFlightOffers(data: dict):
         for flightOffers in data:
             segments = flightOffers["segments"][0]
             legs = segments["legs"][0]
+            # Writes to file in CSV format, can comment out if you don't need it
             file.write(
                 f"{legs["carriersData"][0]["name"]},{legs["flightInfo"]["flightNumber"]},{segments["departureAirport"]["cityName"]},{segments["departureAirport"]["code"]},"
                 f"{getTimeOfDay(segments["departureTime"])},{(len(segments["legs"])) - 1},{getFlightDuration(segments["totalTime"])},{segments["arrivalAirport"]["cityName"]},"
@@ -118,6 +120,7 @@ def searchFlightOffers(data: dict):
                 f"{flightOffers["priceBreakdown"]["total"]["currencyCode"]},{flightOffers["priceBreakdown"]["total"]["units"]},{day_of_week},"
                 f"{datetime.today().strftime('%Y/%m/%d')},{config.DEPARTURE_DATE},{config.RETURN_DATE}\n")
             
+            # Saves specified data in a dictionary to then be formatted in the email body if it meets the PRICE_THRESHOLD
             if flightOffers["priceBreakdown"]["total"]["units"] <= config.PRICE_THRESHOLD:
                 alert_data = {
                     "airline":legs["carriersData"][0]["name"],
@@ -136,18 +139,19 @@ def searchFlightOffers(data: dict):
                 flightAlert(alert_data)
 
 if __name__ == "__main__":
-    mock_data = mockAPI()
-
-    '''response, data = callAPI()
+    #mock_data = mockAPI()
+    #searchFlightOffers(mock_data)
+    response, data = callAPI()
     if response.ok:
         searchFlightOffers(data)
+        # Comment out if you don't want Email alerts
+        sendEmail()
+        # Comment out if you don't want data exported to Google Sheets
+        gsheets.main()
     else:
         print(f"SearchFlight response returned False with status code: {response.status_code}")
         try:
             error_json = response.json()
             print("Message: ", error_json.get("message", "No message provided."))
         except ValueError:
-            print("Raw error: ", response.text)'''
-    
-    searchFlightOffers(mock_data)
-    #sendEmail()
+            print("Raw error: ", response.text)
