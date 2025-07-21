@@ -11,6 +11,12 @@ services:
   server:
     build:
       context: .
+    env_file:
+      - .env
+    volumes:
+      - ./credentials.json:/app/credentials.json:ro
+      - ./token.json:/app/token.json:ro
+      - ./runtime-outputs:/app/runtime
     ports:
       - 8000:8000
 
