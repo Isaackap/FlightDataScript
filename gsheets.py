@@ -67,6 +67,6 @@ def main():
     print(err)
 
 
-if __name__ == "__main__":
-  main()
+#if __name__ == "__main__":
+  #main()
   #readText()

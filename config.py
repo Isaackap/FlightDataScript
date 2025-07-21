@@ -13,9 +13,8 @@ EMAIL_PASSWORD = os.getenv("PASSWORD")
 # Parameters for the email server, only variable that needs changing is the 'SMTP_SERVER', adjust it to your sender email
 SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 587
-USE_TLS = "True"
 # The subject text of the email, set it to whatever you desire
-EMAIL_SUBJECT = "FlightScript Price Alert Test"
+EMAIL_SUBJECT = "FlightScript Price Alert"
 
 
 # ------------------------------------------------------------- API Configurations below --------------------------------------------------------------
