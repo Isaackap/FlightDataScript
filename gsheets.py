@@ -8,6 +8,8 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
 load_dotenv()
+RUNTIME_DIR = "runtime"
+os.makedirs(RUNTIME_DIR, exist_ok=True)
 
 # If modifying these scopes, delete the file token.json.
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
@@ -18,7 +20,7 @@ SAMPLE_RANGE_NAME = "Sheet1!A1"
 
 def readText():
   data = []
-  with open("flight_data.txt", "r") as f:
+  with open(os.path.join(RUNTIME_DIR, "flight_data.txt"), "r") as f:
     lines = f.readlines()
     for item in lines:
       data.append(item.split(','))
@@ -47,7 +49,7 @@ def main():
       )
       creds = flow.run_local_server(port=3000, access_type='offline', include_granted_scopes='true')
     # Save the credentials for the next run
-    with open("token.json", "w") as token:
+    with open(os.path.join(RUNTIME_DIR, "token.json"), "w") as token:
       token.write(creds.to_json())
 
   try:

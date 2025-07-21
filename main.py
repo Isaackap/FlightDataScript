@@ -7,11 +7,14 @@ from email.message import EmailMessage
 from datetime import datetime
 import gsheets
 
+RUNTIME_DIR = "runtime"
+os.makedirs(RUNTIME_DIR, exist_ok=True)
+
 # Function to build and send the email of the price alerts
 # Pulls all the parameters from the config file except the main message/body of the email
 def sendEmail():
     msg = EmailMessage()
-    with open("flight_alert.txt", "r") as f:
+    with open(os.path.join(RUNTIME_DIR, "flight_alert.txt"), "r") as f:
         message = f.read()
         
     if message.strip():     # Check if message/file is empty or not
@@ -31,7 +34,7 @@ def sendEmail():
     else:
         print("File was empty, didn't send email")
     # Clear file once email is sent
-    open("flight_alert.txt", "w").close()
+    open(os.path.join(RUNTIME_DIR, "flight_alert.txt"), "w").close()
 
 # API querystring that imports the parameters set in the config.py file
 # -------- IMPORTANT ---------
@@ -55,7 +58,7 @@ querystring = {
 # Mock data used to test features before implementing actual API calls with a key
 # Response is the JSON given as example response on rapidapi
 def mockAPI():
-    with open("search_flights_response.json", "r") as f:
+    with open(os.path.join(RUNTIME_DIR, "search_flights_response.json"), "r") as f:
         data = json.load(f)
     
     return data["data"]["flightOffers"]
@@ -66,7 +69,7 @@ def callAPI():
 
     data = response.json()
 
-    with open("search_flights_response.json", "w", encoding="utf-8") as f:
+    with open(os.path.join(RUNTIME_DIR, "search_flights_response.json"), "w+", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
 
 
@@ -99,7 +102,7 @@ def getFlightDuration(duration: str) -> str:
 
 # Write specifed data to 'flight_alert.txt'
 def flightAlert(data: dict):
-    with open("flight_alert.txt", "a") as file:
+    with open(os.path.join(RUNTIME_DIR, "flight_alert.txt"), "a") as file:
         file.write(f"{data["source_airport"]} --> {data["destination_airport"]}, {data["departure_date"]} --> {data["return_date"]}\n"
                    f"{data["airline"]}, Flight Number: {data["flight_code"]}, {data["stops"]} Stops, {data["duration"]} Hours\n"
                    f"{data["class"]}, {data["itinerary_type"]}, {data["total_cost"]} {data["currency"]}\n\n")
@@ -108,7 +111,7 @@ def flightAlert(data: dict):
 # Search through the response data for flight info and prices
 def searchFlightOffers(data: dict):
     day_of_week = datetime.now().strftime('%A')
-    with open("flight_data.txt", "w+") as file:
+    with open(os.path.join(RUNTIME_DIR, "flight_data.txt"), "w+") as file:
         for flightOffers in data:
             segments = flightOffers["segments"][0]
             legs = segments["legs"][0]
