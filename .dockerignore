@@ -33,6 +33,8 @@
 LICENSE
 README.md
 **/*.txt
-credentials.json
 search_flights_response.json
+.venv
+.env
 token.json
+credentials.json
