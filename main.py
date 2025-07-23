@@ -6,6 +6,8 @@ import smtplib
 from email.message import EmailMessage
 from datetime import datetime
 import gsheets
+import boto3
+from botocore.exceptions import ClientError
 
 RUNTIME_DIR = "runtime"
 os.makedirs(RUNTIME_DIR, exist_ok=True)

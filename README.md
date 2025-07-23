@@ -20,18 +20,18 @@ Its core use case is helping users track and analyze flight prices in real time,
 ## 🧰 Tech Stack
 
 - **Language:** Python 3.12
-- **Dependencies:**  
-  - `requests`  
-  - `python-dotenv`  
-  - `google-api-python-client`  
-  - `google-auth-httplib2`  
-  - `google-auth-oauthlib`  
+- **Dependencies:**
+  - `requests`
+  - `python-dotenv`
+  - `google-api-python-client`
+  - `google-auth-httplib2`
+  - `google-auth-oauthlib`
   - `smtplib`, `EmailMessage`, `json`, `datetime`
-- **Environment:**  
-  - Uses [`uv`](https://pypi.org/project/uv/) for environment and dependency management  
+- **Environment:**
+  - Uses [`uv`](https://pypi.org/project/uv/) for environment and dependency management
   - Optional Docker setup included
-- **External Services:**  
-  - [BOOKING.COM Flights API](https://rapidapi.com/DataCrawler/api/booking-com15) via RapidAPI  
+- **External Services:**
+  - [BOOKING.COM Flights API](https://rapidapi.com/DataCrawler/api/booking-com15) via RapidAPI
   - Google Sheets API
 
 ---
@@ -39,23 +39,24 @@ Its core use case is helping users track and analyze flight prices in real time,
 ## 📁 Project Structure
 
 .
-├── main.py             # Main script: API calls, parsing, email logic
-├── config.py           # Customizable parameters (API config, thresholds, etc.)
-├── gsheets.py          # Handles Google Sheets export
-├── .env                # Holds sensitive env variables (user-provided)
-├── pyproject.toml      # Dependency definitions (used with uv)
-├── token.json          # Google OAuth token (auto-generated)
-├── credentials.json    # Google API credentials (user-provided)
-├── runtime-outputs/    # Output folder for runtime-generated .json/.txt
-├── uv.lock             # uv dependencies
+├── main.py # Main script: API calls, parsing, email logic
+├── config.py # Customizable parameters (API config, thresholds, etc.)
+├── gsheets.py # Handles Google Sheets export
+├── .env # Holds sensitive env variables (user-provided)
+├── pyproject.toml # Dependency definitions (used with uv)
+├── token.json # Google OAuth token (auto-generated)
+├── credentials.json # Google API credentials (user-provided)
+├── runtime-outputs/ # Output folder for runtime-generated .json/.txt
+├── uv.lock # uv dependencies
 ├── README.md
-├── README.Docker.md    # Separate README for Docker-based deployment
+├── README.Docker.md # Separate README for Docker-based deployment
 
 ---
 
 ## ⚙️ Configuration
 
 ### `.env` Variables
+
 Create a `.env` file in the root directory with the following keys:
 
 RAPIDAPI_KEY=your_rapidapi_key_here
@@ -67,6 +68,7 @@ PASSWORD=your_app_generated_email_password
 > 🔒 The `PASSWORD` should be an **App Password**, not your email login password.
 
 ### `config.py` Parameters
+
 Customize the API request and alert settings:
 
 - Flight search parameters (e.g., origin, destination, dates, passengers)
@@ -88,7 +90,7 @@ cd FlightDataScript
 #### Option A: Using `uv` (recommended if not using Docker)
 
 uv venv
-uv pip install -r requirements.txt  # or use `uv add` manually
+uv pip install -r requirements.txt # or use `uv add` manually
 uv run main.py
 
 #### Option B: Using Docker
@@ -107,6 +109,7 @@ Follow the steps in `README.Docker.md` for full Docker instructions.
 
 Example confirmation:
 Email has been sent to (Email Address)
+Data exported to Google Sheets Successfully
 
 ---
 
@@ -136,4 +139,4 @@ MIT License — free for personal or commercial use.
 
 ## 👤 Author
 
-**Isaac Kapeel**  
+**Isaac Kapeel**

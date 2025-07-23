@@ -64,6 +64,7 @@ def main():
         .append(spreadsheetId=SAMPLE_SPREADSHEET_ID, range=SAMPLE_RANGE_NAME, valueInputOption="USER_ENTERED", body={"values": valueData})
         .execute()
     )
+    print("Data exported to Google Sheets Successfully")
 
   except HttpError as err:
     print(err)
