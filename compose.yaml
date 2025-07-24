@@ -17,7 +17,7 @@ services:
       #- ./credentials.json:/app/credentials.json:ro
       #- ./token.json:/app/token.json:ro
       - ./runtime-outputs:/app/runtime
-      #- ~/.aws:/root/.aws:ro
+      - ~/.aws:/root/.aws:ro
     ports:
       - 8000:8000
 

@@ -2,9 +2,6 @@ import boto3
 import json
 import os
 
-RUNTIME_DIR = "runtime"
-os.makedirs(RUNTIME_DIR, exist_ok=True)
-
 def getEnvSecret(secret_name, secret_value) -> str:
     secret_name = secret_name
     region_name = "us-east-2"
@@ -27,7 +24,7 @@ def getEnvSecret(secret_name, secret_value) -> str:
 
 def getCredentials(secret_name, filename):
     secret_name = secret_name
-    filename = os.path.join(RUNTIME_DIR, filename)
+    filename = filename
     region_name = "us-east-2"
 
     # Create a secrets manager client
@@ -48,7 +45,7 @@ def getCredentials(secret_name, filename):
 
 def updateTokenSecret(secret_name, filename):
     secret_name = secret_name
-    filename = os.path.join(RUNTIME_DIR, filename)
+    filename = filename
     region_name = "us-east-2"
 
     with open(filename, "r") as file:
