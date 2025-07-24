@@ -1,0 +1,69 @@
+import boto3
+import json
+import os
+
+RUNTIME_DIR = "runtime"
+os.makedirs(RUNTIME_DIR, exist_ok=True)
+
+def getEnvSecret(secret_name, secret_value) -> str:
+    secret_name = secret_name
+    region_name = "us-east-2"
+
+    # Create a secrets manager client
+    session = boto3.session.Session()
+    client = session.client(
+        service_name = "secretsmanager",
+        region_name = region_name
+    )
+
+    get_secret_value_response = client.get_secret_value(
+        SecretId = secret_name
+    )
+
+    secret = get_secret_value_response["SecretString"]
+    secret = json.loads(secret)
+    #print(secret[secret_value])
+    return secret[secret_value]
+
+def getCredentials(secret_name, filename):
+    secret_name = secret_name
+    filename = os.path.join(RUNTIME_DIR, filename)
+    region_name = "us-east-2"
+
+    # Create a secrets manager client
+    session = boto3.session.Session()
+    client = session.client(
+        service_name = "secretsmanager",
+        region_name = region_name
+    )
+
+    get_secret_value_response = client.get_secret_value(
+        SecretId = secret_name
+    )
+
+    secret = get_secret_value_response["SecretString"]
+    with open(filename, "w+") as file:
+        file.write(secret)
+    #print("File created")
+
+def updateTokenSecret(secret_name, filename):
+    secret_name = secret_name
+    filename = os.path.join(RUNTIME_DIR, filename)
+    region_name = "us-east-2"
+
+    with open(filename, "r") as file:
+        new_token_data = file.read()
+
+    # Create a secrets manager client
+    session = boto3.session.Session()
+    client = session.client(
+        service_name = "secretsmanager",
+        region_name = region_name
+    )
+
+    update_secret_value_response = client.update_secret(
+        SecretId = secret_name,
+        SecretString = new_token_data
+    )
+
+    print(f"Secret {secret_name} upadated successfully")

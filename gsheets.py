@@ -1,5 +1,6 @@
 import os.path
 from dotenv import load_dotenv
+from secretload import getEnvSecret
 
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
@@ -15,7 +16,8 @@ os.makedirs(RUNTIME_DIR, exist_ok=True)
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
 
 # The ID and range of a sample spreadsheet.
-SAMPLE_SPREADSHEET_ID = os.getenv("SPREADSHEET_ID")
+#SAMPLE_SPREADSHEET_ID = os.getenv("SPREADSHEET_ID")
+SAMPLE_SPREADSHEET_ID = getEnvSecret("FlightScriptEnv", "SPREADSHEET_ID")
 SAMPLE_RANGE_NAME = "Sheet1!A1"
 
 def readText():
@@ -37,15 +39,15 @@ def main():
   # The file token.json stores the user's access and refresh tokens, and is
   # created automatically when the authorization flow completes for the first
   # time.
-  if os.path.exists("token.json"):
-    creds = Credentials.from_authorized_user_file("token.json", SCOPES)
+  if os.path.exists("runtime/token.json"):
+    creds = Credentials.from_authorized_user_file("runtime/token.json", SCOPES)
   # If there are no (valid) credentials available, let the user log in.
   if not creds or not creds.valid:
     if creds and creds.expired and creds.refresh_token:
       creds.refresh(Request())
     else:
       flow = InstalledAppFlow.from_client_secrets_file(
-          "credentials.json", SCOPES
+          "runtime/credentials.json", SCOPES
       )
       creds = flow.run_local_server(port=3000, access_type='offline', include_granted_scopes='true')
     # Save the credentials for the next run

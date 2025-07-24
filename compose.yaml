@@ -8,15 +8,16 @@
 # database or a cache. For examples, see the Awesome Compose repository:
 # https://github.com/docker/awesome-compose
 services:
-  server:
+  app:
     build:
       context: .
-    env_file:
-      - .env
+    #env_file:
+    #  - .env
     volumes:
-      - ./credentials.json:/app/credentials.json:ro
-      - ./token.json:/app/token.json:ro
+      #- ./credentials.json:/app/credentials.json:ro
+      #- ./token.json:/app/token.json:ro
       - ./runtime-outputs:/app/runtime
+      #- ~/.aws:/root/.aws:ro
     ports:
       - 8000:8000
 

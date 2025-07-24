@@ -6,8 +6,7 @@ import smtplib
 from email.message import EmailMessage
 from datetime import datetime
 import gsheets
-import boto3
-from botocore.exceptions import ClientError
+from secretload import getCredentials, updateTokenSecret
 
 RUNTIME_DIR = "runtime"
 os.makedirs(RUNTIME_DIR, exist_ok=True)
@@ -146,6 +145,9 @@ def searchFlightOffers(data: dict):
 if __name__ == "__main__":
     #mock_data = mockAPI()
     #searchFlightOffers(mock_data)
+    # Comment out both lines if not using AWS Secrets Manager
+    getCredentials("FlightScriptToken", "token.json")
+    getCredentials("FlightScriptCredentials", "credentials.json")
     response, data = callAPI()
     if response.ok:
         searchFlightOffers(data)
@@ -153,10 +155,12 @@ if __name__ == "__main__":
         sendEmail()
         # Comment out if you don't want data exported to Google Sheets
         gsheets.main()
+        # Comment out if not using AWS Secrets Manager
+        updateTokenSecret("FlightScriptToken", "token.json")
     else:
         print(f"SearchFlight response returned False with status code: {response.status_code}")
         try:
             error_json = response.json()
             print("Message: ", error_json.get("message", "No message provided."))
         except ValueError:
-            print("Raw error: ", response.text)
+           print("Raw error: ", response.text)

@@ -4,6 +4,8 @@ This Python script uses the BOOKING.COM API (via RapidAPI) to search for flights
 
 Its core use case is helping users track and analyze flight prices in real time, and to build a historical dataset for future data analysis or decision making.
 
+Check Notes section further below for options to handle Environment/secret variables.
+
 ---
 
 ## ✈️ Features
@@ -27,6 +29,7 @@ Its core use case is helping users track and analyze flight prices in real time,
   - `google-auth-httplib2`
   - `google-auth-oauthlib`
   - `smtplib`, `EmailMessage`, `json`, `datetime`
+  - `boto3`
 - **Environment:**
   - Uses [`uv`](https://pypi.org/project/uv/) for environment and dependency management
   - Optional Docker setup included
@@ -42,6 +45,7 @@ Its core use case is helping users track and analyze flight prices in real time,
 ├── main.py # Main script: API calls, parsing, email logic
 ├── config.py # Customizable parameters (API config, thresholds, etc.)
 ├── gsheets.py # Handles Google Sheets export
+├── secretload.py # Handles grabbing environement/private variables from the AWS Secrets Manager
 ├── .env # Holds sensitive env variables (user-provided)
 ├── pyproject.toml # Dependency definitions (used with uv)
 ├── token.json # Google OAuth token (auto-generated)
@@ -128,6 +132,9 @@ Data exported to Google Sheets Successfully
 
 - If you only want part of the functionality, you can comment out the `sendEmail()` and/or `gsheets.main()` calls in `main.py`.
 - All personal credentials are excluded from source control by default — ensure `.env`, `token.json`, and `credentials.json` are not committed.
+- Environment variables, as well as credentials.json and token.json will have 2 versions. One with files stored in root directory, and
+- the other is grabbing the variables/data through AWS' Secrets Manager function. Simple uncomment/comment the one you choose to use.
+- Also must update the `compose.yaml` file to match the environment variables handling (uncomment or comment lines)
 
 ---
 
