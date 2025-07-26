@@ -2,6 +2,7 @@ import boto3
 import json
 import os
 
+# Grab all environment variables stored in a single AWS Secret
 def getEnvSecret(secret_name, secret_value) -> str:
     secret_name = secret_name
     region_name = "us-east-2"
@@ -22,6 +23,7 @@ def getEnvSecret(secret_name, secret_value) -> str:
     #print(secret[secret_value])
     return secret[secret_value]
 
+# Grab the token and credentials json data stored in a AWS Secret, and write to a .json file
 def getCredentials(secret_name, filename):
     secret_name = secret_name
     filename = filename
@@ -43,6 +45,7 @@ def getCredentials(secret_name, filename):
         file.write(secret)
     #print("File created")
 
+# Update the 'token.json' token AWS Secret with the new one in case it got refreshed/regenerated
 def updateTokenSecret(secret_name, filename):
     secret_name = secret_name
     filename = filename

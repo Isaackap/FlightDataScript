@@ -146,8 +146,8 @@ if __name__ == "__main__":
     #mock_data = mockAPI()
     #searchFlightOffers(mock_data)
     # Comment out both lines if not using AWS Secrets Manager
-    getCredentials("FlightScriptToken", "token.json")
-    getCredentials("FlightScriptCredentials", "credentials.json")
+    getCredentials("Token", "token.json")
+    getCredentials("Credentials", "credentials.json")
     response, data = callAPI()
     if response.ok:
         searchFlightOffers(data)
@@ -156,7 +156,7 @@ if __name__ == "__main__":
         # Comment out if you don't want data exported to Google Sheets
         gsheets.main()
         # Comment out if not using AWS Secrets Manager
-        updateTokenSecret("FlightScriptToken", "token.json")
+        updateTokenSecret("Token", "token.json")
     else:
         print(f"SearchFlight response returned False with status code: {response.status_code}")
         try:
