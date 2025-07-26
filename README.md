@@ -61,7 +61,7 @@ Check Notes section further below for options to handle Environment/secret varia
 
 ### `.env` Variables
 
-Create a `.env` file in the root directory with the following keys:
+If not using AWS Secrets Manager, then create a `.env` file in the root directory with the following keys:
 
 RAPIDAPI_KEY=your_rapidapi_key_here
 SENDER_EMAIL=your_email@gmail.com
@@ -135,12 +135,6 @@ Data exported to Google Sheets Successfully
 - Environment variables, as well as credentials.json and token.json will have 2 versions. One with files stored in root directory, and
 - the other is grabbing the variables/data through AWS' Secrets Manager function. Simple uncomment/comment the one you choose to use.
 - Also must update the `compose.yaml` file to match the environment variables handling (uncomment or comment lines)
-
----
-
-## 📄 License
-
-MIT License — free for personal or commercial use.
 
 ---
 
