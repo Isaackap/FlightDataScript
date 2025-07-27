@@ -8,18 +8,18 @@ Check Notes section further below for options to handle Environment/secret varia
 
 ---
 
-## ✈️ Features
+## Features
 
-- 🔎 Searches flights using the BOOKING.COM API
-- 📊 Exports flight data to Google Sheets
-- 📬 Sends email alerts for flights below a price threshold
-- 🗃️ Saves JSON and TXT logs of flight data in a runtime directory
-- ⚙️ Highly configurable via `config.py` and `.env`
-- 🐳 Optional Docker support for clean deployment
+- Searches flights using the BOOKING.COM API
+- Exports flight data to Google Sheets
+- Sends email alerts for flights below a price threshold
+- Saves JSON and TXT logs of flight data in a runtime directory
+- Highly configurable via `config.py` and `.env`
+- Optional Docker support for clean deployment
 
 ---
 
-## 🧰 Tech Stack
+## Tech Stack
 
 - **Language:** Python 3.12
 - **Dependencies:**
@@ -39,7 +39,7 @@ Check Notes section further below for options to handle Environment/secret varia
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 .
 ├── main.py # Main script: API calls, parsing, email logic
@@ -57,7 +57,7 @@ Check Notes section further below for options to handle Environment/secret varia
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 ### `.env` Variables
 
@@ -69,7 +69,7 @@ RECEIVER_EMAIL=recipient_email@gmail.com
 SPREADSHEET_ID=your_google_sheet_id
 PASSWORD=your_app_generated_email_password
 
-> 🔒 The `PASSWORD` should be an **App Password**, not your email login password.
+> The `PASSWORD` should be an **App Password**, not your email login password.
 
 ### `config.py` Parameters
 
@@ -82,7 +82,7 @@ Customize the API request and alert settings:
 
 ---
 
-## 🚀 Usage
+## Usage
 
 ### 1. Clone the Repository
 
@@ -105,11 +105,11 @@ Follow the steps in `README.Docker.md` for full Docker instructions.
 
 ---
 
-## ✉️ Output
+## Output
 
-- ✅ **Email Alert** if any flights are below your price threshold
-- 📤 **Google Sheets** receives structured flight data (requires setup)
-- 📝 **Local files**: `.json` response and `.txt` summaries saved to `/runtime-outputs/`
+- **Email Alert** if any flights are below your price threshold
+- **Google Sheets** receives structured flight data (requires setup)
+- **Local files**: `.json` response and `.txt` summaries saved to `/runtime-outputs/`
 
 Example confirmation:
 Email has been sent to (Email Address)
@@ -117,7 +117,7 @@ Data exported to Google Sheets Successfully
 
 ---
 
-## 📝 Prerequisites
+## Prerequisites
 
 - Python 3.12 (or use Docker)
 - Google Sheets API enabled with proper OAuth setup:
@@ -128,16 +128,10 @@ Data exported to Google Sheets Successfully
 
 ---
 
-## 📌 Notes
+## Notes
 
 - If you only want part of the functionality, you can comment out the `sendEmail()` and/or `gsheets.main()` calls in `main.py`.
 - All personal credentials are excluded from source control by default — ensure `.env`, `token.json`, and `credentials.json` are not committed.
 - Environment variables, as well as credentials.json and token.json will have 2 versions. One with files stored in root directory, and
 - the other is grabbing the variables/data through AWS' Secrets Manager function. Simple uncomment/comment the one you choose to use.
 - Also must update the `compose.yaml` file to match the environment variables handling (uncomment or comment lines)
-
----
-
-## 👤 Author
-
-**Isaac Kapeel**
